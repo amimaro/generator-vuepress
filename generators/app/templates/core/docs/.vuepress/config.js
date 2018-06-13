@@ -1,6 +1,6 @@
 module.exports = {
   title: '<%= projectName %>',
-  description: '<%= description %>'
+  description: '<%= description %>',
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
