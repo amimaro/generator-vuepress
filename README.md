@@ -6,6 +6,7 @@
 First, install [Yeoman](http://yeoman.io) and generator-vuepress using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
 
 ```bash
+npm install -g vuepress
 npm install -g yo
 npm install -g generator-vuepress
 ```
@@ -14,6 +15,33 @@ Then generate your new project:
 
 ```bash
 yo vuepress
+```
+
+## Getting started
+
+```bash
+npm run docs:dev
+```
+
+## Build
+
+```bash
+npm run docs:build
+```
+
+Build generated under `docs/.vuepress/dist`
+
+## File tree
+```
+.
+├── docs
+│   ├── README.md
+│   └── .vuepress
+│       ├── dist
+│       └── config.js
+├── .gitignore
+├── package.json
+└── README.md
 ```
 
 ## Getting To Know Yeoman
