@@ -1,0 +1,49 @@
+'use strict';
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+
+module.exports = class extends Generator {
+  prompting() {
+    // Have Yeoman greet the user.
+    this.log(
+      yosay(`Welcome to ${chalk.green('generator-vuepress')}!`)
+    );
+
+    this.appname = this.appname.replace(/\s+/g, '-');
+
+    const prompts = [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is your project name?',
+        default: this.appname
+      }
+    ];
+
+    return this.prompt(prompts).then(props=> {
+      this.props = props;
+    });
+  }
+
+  writing() {
+    this.fs.copy(
+      this.templatePath('core/.gitignore'),
+      this.destinationPath(`${this.props.projectName}/.gitignore`)
+    );
+
+    this.fs.copyTpl(
+      this.templatePath('core'),
+      this.destinationPath(`${this.props.projectName}/.`),
+      this.props
+    );
+  }
+
+  install() {
+    process.chdir(this.props.projectName);
+    this.npmInstall().then(() => {
+      this.log('\n\nSuccessfully Done!!');
+      this.log('Run ' + chalk.green('npm run docs:dev') + ' to start.\n');
+    });
+  }
+};

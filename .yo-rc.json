@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "amimaro",
+      "authorEmail": "amir.zahlan@gmail.com",
+      "authorUrl": "amimaro.github.io"
+    }
+  }
+}
