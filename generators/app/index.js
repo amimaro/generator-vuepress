@@ -41,6 +41,12 @@ module.exports = class extends Generator {
     );
 
     this.fs.copyTpl(
+      this.templatePath('core/docs/.vuepress'),
+      this.destinationPath(`${this.props.slugName}/docs/.vuepress`),
+      this.props
+    );
+
+    this.fs.copyTpl(
       this.templatePath('core'),
       this.destinationPath(`${this.props.slugName}/.`),
       this.props
