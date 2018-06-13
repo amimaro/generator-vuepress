@@ -7,10 +7,10 @@ describe('generator-vuepress:app', () => {
   beforeAll(() => {
     return helpers
       .run(path.join(__dirname, '../generators/app'))
-      .withPrompts({ someAnswer: true });
+      .withPrompts({ projectName: 'press', description: 'Awesome Description' });
   });
 
   it('creates files', () => {
-    assert.file(['dummyfile.txt']);
+    assert.file(['README.md', '.gitignore', 'docs/.vuepress/config.js']);
   });
 });
