@@ -2,6 +2,7 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
+const to = require('to-case');
 
 module.exports = class extends Generator {
   prompting() {
@@ -15,10 +16,16 @@ module.exports = class extends Generator {
     const prompts = [
       {
         type: 'input',
-        name: 'name',
+        name: 'projectName',
         message: 'What is your project name?',
         default: this.appname
-      }
+      },
+      {
+        type: 'input',
+        name: 'description',
+        message: 'Description:',
+        default: "Awesome description"
+      },
     ];
 
     return this.prompt(prompts).then(props=> {
@@ -29,18 +36,18 @@ module.exports = class extends Generator {
   writing() {
     this.fs.copy(
       this.templatePath('core/.gitignore'),
-      this.destinationPath(`${this.props.projectName}/.gitignore`)
+      this.destinationPath(`${to.slug(this.props.projectName)}/.gitignore`)
     );
 
     this.fs.copyTpl(
       this.templatePath('core'),
-      this.destinationPath(`${this.props.projectName}/.`),
+      this.destinationPath(`${to.slug(this.props.projectName)}/.`),
       this.props
     );
   }
 
   install() {
-    process.chdir(this.props.projectName);
+    process.chdir(to.slug(this.props.projectName));
     this.npmInstall().then(() => {
       this.log('\n\nSuccessfully Done!!');
       this.log('Run ' + chalk.green('npm run docs:dev') + ' to start.\n');
