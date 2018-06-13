@@ -7,9 +7,7 @@ const to = require('to-case');
 module.exports = class extends Generator {
   prompting() {
     // Have Yeoman greet the user.
-    this.log(
-      yosay(`Welcome to ${chalk.green('generator-vuepress')}!`)
-    );
+    this.log(yosay(`Welcome to ${chalk.green('generator-vuepress')}!`));
 
     this.appname = this.appname.replace(/\s+/g, '-');
 
@@ -24,11 +22,11 @@ module.exports = class extends Generator {
         type: 'input',
         name: 'description',
         message: 'Description:',
-        default: "Awesome description"
-      },
+        default: 'Awesome description'
+      }
     ];
 
-    return this.prompt(prompts).then(props=> {
+    return this.prompt(prompts).then(props => {
       this.props = props;
       this.props.slugName = to.slug(this.props.projectName);
     });
