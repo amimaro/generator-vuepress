@@ -30,24 +30,25 @@ module.exports = class extends Generator {
 
     return this.prompt(prompts).then(props=> {
       this.props = props;
+      this.props.slugName = to.slug(this.props.projectName);
     });
   }
 
   writing() {
     this.fs.copy(
       this.templatePath('core/.gitignore'),
-      this.destinationPath(`${to.slug(this.props.projectName)}/.gitignore`)
+      this.destinationPath(`${this.props.slugName}/.gitignore`)
     );
 
     this.fs.copyTpl(
       this.templatePath('core'),
-      this.destinationPath(`${to.slug(this.props.projectName)}/.`),
+      this.destinationPath(`${this.props.slugName}/.`),
       this.props
     );
   }
 
   install() {
-    process.chdir(to.slug(this.props.projectName));
+    process.chdir(this.props.slugName);
     this.npmInstall().then(() => {
       this.log('\n\nSuccessfully Done!!');
       this.log('Run ' + chalk.green('npm run docs:dev') + ' to start.\n');
