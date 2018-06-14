@@ -35,11 +35,6 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.fs.copy(
-      this.templatePath('core/_.gitignore'),
-      this.destinationPath(`${this.props.destination}/.gitignore`)
-    );
-
     this.fs.copyTpl(
       this.templatePath('core/docs/.vuepress'),
       this.destinationPath(`${this.props.destination}/docs/.vuepress`),
@@ -50,6 +45,11 @@ module.exports = class extends Generator {
       this.templatePath('core'),
       this.destinationPath(`${this.props.destination}/.`),
       this.props
+    );
+
+    this.fs.copy(
+      this.templatePath('core/.gitignore'),
+      this.destinationPath(`${this.props.destination}/.gitignore`)
     );
   }
 
