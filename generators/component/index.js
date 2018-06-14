@@ -11,7 +11,7 @@ module.exports = class extends Generator {
       }
     ]).then(props => {
       this.props = props;
-      this.props.destination = this.props.componentName.replace('-', '/') + '.vue';
+      this.props.destination = this.props.componentName.replace(/[-\s]/, '/') + '.vue';
       this.props.componentSlug = to.slug(this.props.componentName);
       this.log('\n\n');
     });
