@@ -14,3 +14,29 @@ describe('generator-vuepress:app', () => {
     assert.file(['README.md', '.gitignore', 'docs/.vuepress/config.js']);
   });
 });
+
+describe('generator-vuepress:page', () => {
+  beforeAll(() => {
+    return helpers
+      .run(path.join(__dirname, '../generators/page'))
+      .withPrompts({ pageName: 'Test Page' });
+  });
+
+  it('creates files', () => {
+    assert.file([`docs/test-page/README.md`]);
+    assert.fileContent(`docs/test-page/README.md`, /# Test Page/);
+  });
+});
+
+describe('generator-vuepress:component', () => {
+  beforeAll(() => {
+    return helpers
+      .run(path.join(__dirname, '../generators/component'))
+      .withPrompts({ componentName: 'Test-Component' });
+  });
+
+  it('creates files', () => {
+    assert.file([`docs/.vuepress/components/Test/Component.vue`]);
+    assert.fileContent(`docs/.vuepress/components/Test/Component.vue`, /<template>/);
+  });
+});
