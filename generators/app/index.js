@@ -56,7 +56,7 @@ module.exports = class extends Generator {
   install() {
     process.chdir(this.props.destination);
     this.npmInstall().then(() => {
-      this.log('\n\nSuccessfully Done!!');
+      this.log('\n\nSuccessfully Generated!!');
       this.log(`Run ${chalk.green(`npm run docs:dev`)} to start.\n`);
     });
   }
