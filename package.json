@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "recast": "^0.15.0",
     "to-case": "^2.0.0",
     "yeoman-generator": "^2.0.1",
     "yosay": "^2.0.1"
