@@ -35,20 +35,21 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    const files = ['docs', 'package.json', 'README.md'];
+    for (let file of files) {
+      this.fs.copyTpl(
+        this.templatePath(`core/${file}`),
+        this.destinationPath(`${this.props.destination}/${file}`),
+        this.props
+      );
+    }
     this.fs.copyTpl(
       this.templatePath('core/docs/.vuepress'),
       this.destinationPath(`${this.props.destination}/docs/.vuepress`),
       this.props
     );
-
-    this.fs.copyTpl(
-      this.templatePath('core'),
-      this.destinationPath(`${this.props.destination}/.`),
-      this.props
-    );
-
     this.fs.copy(
-      this.templatePath('core/.gitignore'),
+      this.templatePath('core/_.gitignore'),
       this.destinationPath(`${this.props.destination}/.gitignore`)
     );
   }
