@@ -23,6 +23,23 @@ yo vuepress
 npm run docs:dev
 ```
 
+## Generate Page
+
+```bash
+yo vuepress:page
+```
+
+Creates a `[folder]/README.md` under docs.
+Overwrite the conflicts to persist the theme configurations.
+
+## Generate Component
+
+```bash
+yo vuepress:component
+```
+
+Creates a component under `docs/.vuepress/components`.
+
 ## Build
 
 ```bash
@@ -35,10 +52,22 @@ Build generated under `docs/.vuepress/dist`
 ```
 .
 ├── docs
+│   ├── about
+│   │   └── README.md
+│   ├── contact
+│   │   └── README.md
+│   ├── images
+│   │   └── thumbnail-256x256.png
 │   ├── README.md
 │   └── .vuepress
-│       ├── dist
-│       └── config.js
+│       ├── components
+│       │   ├── Button
+│       │   │   └── Counter.vue
+│       │   └── Demo.vue
+│       ├── config.js
+|       ├── dist
+│       └── public
+│           └── favicon.ico
 ├── .gitignore
 ├── package.json
 └── README.md
