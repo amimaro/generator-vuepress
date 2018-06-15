@@ -9,7 +9,7 @@ meta:
 
 # <%= projectName %>
 
-## <%= description %>
+> <%= description %>
 
 <p align="center">
   <img src="./images/thumbnail-256x256.png" />
