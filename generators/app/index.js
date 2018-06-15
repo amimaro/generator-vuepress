@@ -23,42 +23,58 @@ module.exports = class extends Generator {
         name: 'description',
         message: 'Description:',
         default: 'Awesome description'
+      },
+      {
+        type: 'confirm',
+        name: 'scripts',
+        message: 'Add scripts to package.json?'
       }
     ];
 
     return this.prompt(prompts).then(props => {
       this.props = props;
       this.props.slugName = to.slug(this.props.projectName);
-      if (this.appname === this.props.slugName) this.props.destination = '.';
-      else this.props.destination = this.props.slugName;
     });
   }
 
   writing() {
-    const files = ['docs', 'package.json', 'README.md'];
-    for (let file of files) {
-      this.fs.copyTpl(
-        this.templatePath(`core/${file}`),
-        this.destinationPath(`${this.props.destination}/${file}`),
-        this.props
-      );
-    }
     this.fs.copyTpl(
-      this.templatePath('core/docs/.vuepress'),
-      this.destinationPath(`${this.props.destination}/docs/.vuepress`),
+      this.templatePath('core/docs'),
+      this.destinationPath('docs'),
       this.props
     );
-    this.fs.copy(
-      this.templatePath('core/_.gitignore'),
-      this.destinationPath(`${this.props.destination}/.gitignore`)
+    this.fs.copyTpl(
+      this.templatePath('core/docs/.vuepress'),
+      this.destinationPath('docs/.vuepress'),
+      this.props
     );
+    if (this.props.scripts) {
+      const scripts = {
+        'docs:dev': 'vuepress dev docs',
+        'docs:build': 'vuepress build docs'
+      };
+      if (this.fs.exists(this.destinationPath('package.json'))) {
+        let pack = JSON.parse(this.fs.read('package.json'));
+        if (pack.scripts === undefined) pack.scripts = {};
+        pack.scripts = Object.assign(pack.scripts, scripts);
+        this.fs.write('package.json', JSON.stringify(pack, null, 2));
+      } else {
+        this.fs.write(
+          'package.json',
+          JSON.stringify(
+            {
+              scripts: scripts
+            },
+            null,
+            2
+          ) + '\n'
+        );
+      }
+    }
   }
 
   install() {
-    process.chdir(this.props.destination);
-    this.npmInstall().then(() => {
-      this.log('\n\nSuccessfully Generated!!');
-      this.log(`Run ${chalk.green(`npm run docs:dev`)} to start.\n`);
-    });
+    this.log('\n\nSuccessfully Generated!!');
+    this.log(`Run ${chalk.green(`npm run docs:dev`)} to start.\n`);
   }
 };
