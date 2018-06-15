@@ -11,7 +11,7 @@ describe('generator-vuepress:app', () => {
   });
 
   it('creates files', () => {
-    assert.file(['README.md', '.gitignore', 'docs/.vuepress/config.js']);
+    assert.file(['docs/.vuepress/config.js']);
   });
 });
 
