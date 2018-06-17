@@ -1,4 +1,4 @@
-# generator-vuepress [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# generator-vuepress [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/amimaro/generator-vuepress)
 > Yeoman generator for VuePress
 
 ## Installation
@@ -68,9 +68,7 @@ Build generated under `docs/.vuepress/dist`
 |       ├── dist
 │       └── public
 │           └── favicon.ico
-├── .gitignore
-├── package.json
-└── README.md
+└── package.json
 ```
 
 ## Getting To Know Yeoman
