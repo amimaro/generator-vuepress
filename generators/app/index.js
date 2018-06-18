@@ -34,18 +34,20 @@ module.exports = class extends Generator {
     return this.prompt(prompts).then(props => {
       this.props = props;
       this.props.slugName = to.slug(this.props.projectName);
+      if (this.appname === this.props.projectName) this.props.destination = '.';
+      else this.props.destination = this.props.slugName;
     });
   }
 
   writing() {
     this.fs.copyTpl(
       this.templatePath('core/docs'),
-      this.destinationPath('docs'),
+      this.destinationPath(`${this.props.destination}/docs`),
       this.props
     );
     this.fs.copyTpl(
       this.templatePath('core/docs/.vuepress'),
-      this.destinationPath('docs/.vuepress'),
+      this.destinationPath(`${this.props.destination}/docs/.vuepress`),
       this.props
     );
     if (this.props.scripts) {
@@ -53,14 +55,19 @@ module.exports = class extends Generator {
         'docs:dev': 'vuepress dev docs',
         'docs:build': 'vuepress build docs'
       };
-      if (this.fs.exists(this.destinationPath('package.json'))) {
-        let pack = JSON.parse(this.fs.read('package.json'));
+      if (
+        this.fs.exists(this.destinationPath(`${this.props.destination}/package.json`))
+      ) {
+        let pack = JSON.parse(this.fs.read(`${this.props.destination}/package.json`));
         if (pack.scripts === undefined) pack.scripts = {};
         pack.scripts = Object.assign(pack.scripts, scripts);
-        this.fs.write('package.json', JSON.stringify(pack, null, 2));
+        this.fs.write(
+          `${this.props.destination}/package.json`,
+          JSON.stringify(pack, null, 2)
+        );
       } else {
         this.fs.write(
-          'package.json',
+          `${this.props.destination}/package.json`,
           JSON.stringify(
             {
               scripts: scripts
