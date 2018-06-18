@@ -17,6 +17,8 @@ Then generate your new project:
 yo vuepress
 ```
 
+Check out for VuePress Docs [here](https://vuepress.vuejs.org/).
+
 ## Getting started
 
 ```bash
