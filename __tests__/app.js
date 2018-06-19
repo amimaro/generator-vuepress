@@ -15,6 +15,18 @@ describe('generator-vuepress:app', () => {
   });
 });
 
+describe('generator-vuepress:page', () => {
+  beforeAll(() => {
+    return helpers
+      .run(path.join(__dirname, '../generators/page'))
+      .withPrompts({ pageName: 'page test' });
+  });
+
+  it('creates files', () => {
+    assert.file([`docs/page-test/README.md`]);
+  });
+});
+
 describe('generator-vuepress:component', () => {
   beforeAll(() => {
     return helpers
