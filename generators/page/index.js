@@ -12,11 +12,12 @@ const updateConfigs = function(params) {
   })[0];
   if (!themeConfig) return;
   // Filter option property
-  const property = themeConfig.value.properties.filter(element => {
+  let property = themeConfig.value.properties.filter(element => {
     if (element.key.name === params.option) return true;
     return false;
-  })[0].value.elements;
-  if (!property) return;
+  });
+  if (property.length === 0) return;
+  property = property[0].value.elements;
   const route = JSON.parse(JSON.stringify(property[0]));
   if (route.elements) {
     route.elements[0].value = `/${params.props.pageSlug}/`;
@@ -52,22 +53,33 @@ module.exports = class extends Generator {
     );
     if (!this.fs.exists(this.destinationPath('docs/.vuepress/config.js'))) return;
     const configs = this.fs.read('docs/.vuepress/config.js');
-    const navOutput = updateConfigs({
-      props: this.props,
-      configs: configs,
-      option: 'nav'
-    });
-    const sidebarOutput = updateConfigs({
-      props: this.props,
-      configs: navOutput,
-      option: 'sidebar'
-    });
-    const output = sidebarOutput
-      .replace(/{\n {8}text:/g, '{ text:')
-      .replace(/\/"\n {6}}/g, '/" }')
-      .replace(/"/g, "'")
-      .replace(/,\n {8}link:/g, ', link:');
-    this.fs.write('docs/.vuepress/config.js', output);
+    const options = ['nav', 'sidebar'];
+    var output = null;
+    for (let option of options) {
+      let test = null;
+      if (output === null) {
+        test = updateConfigs({
+          props: this.props,
+          configs: configs,
+          option: option
+        });
+      } else {
+        test = updateConfigs({
+          props: this.props,
+          configs: output,
+          option: option
+        });
+      }
+      if (test !== undefined) output = test;
+    }
+    if (output !== null && output !== undefined) {
+      output = output
+        .replace(/{\n {8}text:/g, '{ text:')
+        .replace(/\/"\n {6}}/g, '/" }')
+        .replace(/"/g, "'")
+        .replace(/,\n {8}link:/g, ', link:');
+      this.fs.write('docs/.vuepress/config.js', output);
+    }
   }
 
   install() {
