@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "chalk": "^2.1.0",
+    "glob": "^7.1.2",
     "html-pdf": "^2.2.0",
     "recast": "^0.15.0",
     "to-case": "^2.0.0",
