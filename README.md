@@ -42,6 +42,14 @@ yo vuepress:component
 
 Creates a component under `docs/.vuepress/components`.
 
+## Generate PDF
+
+```bash
+yo vuepress:pdf
+```
+
+Creates a pdf document from the builded project. The sections are sorted by `themeConfig.nav`.
+
 ## Build
 
 ```bash
