@@ -8,7 +8,7 @@ module.exports = class extends Generator {
       {
         type: 'confirm',
         name: 'toPdf',
-        message: 'Convert to pdf?'
+        message: 'Generate PDF?'
       }
     ]).then(props => {
       this.props = props;
@@ -21,11 +21,43 @@ module.exports = class extends Generator {
       const self = this;
       let html = '';
       let style = '';
-      const htmlFiles = glob.sync(process.cwd() + '/docs/.vuepress/dist/**/*.html');
+      const htmlFiles = glob
+        .sync(process.cwd() + '/docs/.vuepress/dist/**/*.html')
+        .sort((a, b) => {
+          return a.length - b.length;
+        })
+        .filter(element => {
+          if (element.indexOf('404') >= 0) return false;
+          return true;
+        });
+      if (htmlFiles.length === 0) {
+        this.log('Build not found');
+        return;
+      }
       const styleFiles = glob.sync(process.cwd() + '/docs/.vuepress/dist/**/*.css');
       for (let file of styleFiles) {
         style += this.fs.read(file);
       }
+      const config = JSON.parse(
+        this.fs
+          .read('docs/.vuepress/config.js')
+          .replace(/'/g, '"')
+          .replace(/module\.exports = /g, '')
+          .replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2":')
+      );
+      // Sort by navbar
+      let navs = config.themeConfig.nav || [];
+      for (const [pageIndex, nav] of navs.entries()) {
+        let page = nav.link === '/' ? 'MainPage' : nav.link.replace(/\//g, '');
+        for (let [fileIndex, file] of htmlFiles.entries()) {
+          if (file.indexOf(page) >= 0 && fileIndex !== pageIndex) {
+            let swapped = htmlFiles[fileIndex];
+            htmlFiles[fileIndex] = htmlFiles[pageIndex];
+            htmlFiles[pageIndex] = swapped;
+          }
+        }
+      }
+      // Compose document
       for (let file of htmlFiles) {
         html += this.fs
           .read(file)
