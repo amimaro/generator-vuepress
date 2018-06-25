@@ -5,12 +5,12 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'About', link: '/about/' },
-      { text: 'Contact', link: '/contact/' },
+      { text: 'Contact', link: '/contact/' }
     ],
     sidebar: [
       ['/', 'Home'],
       ['/about/', 'About'],
-      ['/contact/', 'Contact'],
+      ['/contact/', 'Contact']
     ]
   }
 }
