@@ -68,7 +68,15 @@ module.exports = class extends Generator {
             '<div class="page">'
           );
       }
-      const options = { format: 'A4' };
+      const options = {
+        format: 'A4',
+        header: {
+          height: '20mm'
+        },
+        footer: {
+          height: '20mm'
+        }
+      };
       pdf.create(html, options).toFile(`./output.pdf`, function(err, res) {
         if (err) return console.log(err);
         self.log(`${res.filename} - Generated Successfully!!`);
