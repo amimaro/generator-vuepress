@@ -34,10 +34,12 @@ module.exports = class extends Generator {
         this.log('Build not found');
         return;
       }
+
       const styleFiles = glob.sync(process.cwd() + '/docs/.vuepress/dist/**/*.css');
       for (let file of styleFiles) {
         style += this.fs.read(file);
       }
+
       const config = JSON.parse(
         this.fs
           .read('docs/.vuepress/config.js')
@@ -58,6 +60,7 @@ module.exports = class extends Generator {
         }
       }
       // Compose document
+
       for (let file of htmlFiles) {
         html += this.fs
           .read(file)
@@ -68,6 +71,7 @@ module.exports = class extends Generator {
             '<div class="page">'
           );
       }
+
       const options = {
         format: 'A4',
         header: {

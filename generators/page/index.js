@@ -26,6 +26,7 @@ const updateConfigs = function(params) {
     route.properties[0].value.value = params.props.pageName;
     route.properties[1].value.value = `/${params.props.pageSlug}/`;
   }
+
   property.push(route); // Add new route
   return recast.print(ast).code;
 };
@@ -70,8 +71,10 @@ module.exports = class extends Generator {
           option: option
         });
       }
+
       if (test !== undefined) output = test;
     }
+
     if (output !== null && output !== undefined) {
       output = output
         .replace(/{\n {8}text:/g, '{ text:')
